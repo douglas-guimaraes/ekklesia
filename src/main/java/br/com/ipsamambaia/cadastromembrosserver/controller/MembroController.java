@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ipsamambaia.cadastromembrosserver.entity.User;
+import br.com.ipsamambaia.cadastromembrosserver.entity.seguranca.Usuario;
 import br.com.ipsamambaia.cadastromembrosserver.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -20,7 +20,7 @@ public class MembroController {
     private UserService userService;
     
     @GetMapping
-    public List<User> findAll(){
+    public List<Usuario> findAll(){
         return userService.findAll();
     }
 }
