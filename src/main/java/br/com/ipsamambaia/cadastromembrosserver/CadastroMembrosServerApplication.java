@@ -9,4 +9,5 @@ public class CadastroMembrosServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CadastroMembrosServerApplication.class, args);
 	}
+	
 }
