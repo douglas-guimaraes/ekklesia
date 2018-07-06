@@ -18,6 +18,7 @@ create table if not exists corporativo.membro (
   id integer constraint pk_membro primary key,
   nome varchar(150) not null,
   data_nascimento date null,
+  tp_sexo int null,
   naturalidade varchar(150) null,
   uf_naturalidade char(2) null,
   rg varchar(15) null,
@@ -25,7 +26,7 @@ create table if not exists corporativo.membro (
   tp_escolaridade int null,
   info_adicional varchar(500) null,
   tp_alocacao int null,
-  id_profissao int not null constraint fk_membro_profissao not null references corporativo.profissao (id),
+  id_profissao int constraint fk_membro_profissao not null references corporativo.profissao (id),
   id_usuario int constraint fk_membro_usuario not null references seguranca.usuario (id)
 );
 

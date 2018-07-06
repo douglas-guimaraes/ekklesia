@@ -29,7 +29,7 @@ public class MembroController {
     
     @RequestMapping(method = RequestMethod.GET, path = "/{id}", produces = "application/json")
     @ApiOperation("Retorna um membro específico pelo seu identificador. 404 se não for encontrado.")
-    public Membro obterMembroPorId(@ApiParam("Identificador do membro. Não pode ser vazio.") @PathVariable int id) {
+    public Membro obterMembroPorId(@ApiParam("Identificador do membro. Não pode ser vazio.") @PathVariable long id) {
         return null;
     }
 
@@ -48,7 +48,8 @@ public class MembroController {
     
     @RequestMapping(method = RequestMethod.PUT, produces = "application/json")
     @ApiOperation("Atualiza um membro existente.")
-    public Membro atualizarMembro(@ApiParam("Dados do membro a ser atualizado.") @RequestBody Membro membro) {
+    public Membro atualizarMembro(@ApiParam("Identificador do membro a ser atualizado.") @RequestBody long id,
+        @ApiParam("Dados do membro a ser atualizado.") @RequestBody Membro membro) {
         return null;
     }
 }

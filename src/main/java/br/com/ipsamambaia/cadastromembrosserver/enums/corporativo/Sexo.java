@@ -8,17 +8,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.ipsamambaia.cadastromembrosserver.enums.EnumJsonCreator;
 import io.swagger.annotations.ApiModel;
 
-@ApiModel(description = "Situação do oficialato")
+@ApiModel(description = "Sexo")
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum SituacaoOficialato implements EnumJsonCreator {
+public enum Sexo implements EnumJsonCreator {
 
-    ATIVO(0, "Ativo"),
-    DISPONIBILIDADE(1, "Em disponibilidade");
+    MASCULINO(0, "Masculino"),
+    FEMININO(1, "Feminino");
     
     private Integer id;
     private String descricao;
 
-    private SituacaoOficialato(Integer id, String descricao) {
+    private Sexo(Integer id, String descricao) {
         this.id = id;
         this.descricao = descricao;
     }
@@ -33,7 +33,7 @@ public enum SituacaoOficialato implements EnumJsonCreator {
     }
     
     @JsonCreator
-    public static SituacaoOficialato fromObject(final Map<String, Object> obj) {
+    public static Sexo fromObject(final Map<String, Object> obj) {
         if (obj != null && obj.containsKey(ID_MEMBER)) {
             Integer id = null;
             if (obj.get(ID_MEMBER) instanceof Integer) {
@@ -48,8 +48,8 @@ public enum SituacaoOficialato implements EnumJsonCreator {
         return null;
     }
 
-    public static SituacaoOficialato fromId(final Integer id) {
-        for (SituacaoOficialato e : SituacaoOficialato.values()) {
+    public static Sexo fromId(final Integer id) {
+        for (Sexo e : Sexo.values()) {
             if (id.equals(e.getId())) {
                 return e;
             }
