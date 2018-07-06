@@ -1,6 +1,15 @@
 -- schema seguranca
 create schema if not exists corporativo;
 
+-- profissao
+
+create sequence if not exists corporativo.sq_profissao start 1;
+
+create table if not exists corporativo.profissao (
+  id integer constraint pk_profissao primary key,
+  nome varchar(150) null
+);
+
 -- membro
 
 create sequence if not exists corporativo.sq_membro start 1;
@@ -16,7 +25,8 @@ create table if not exists corporativo.membro (
   tp_escolaridade int null,
   info_adicional varchar(500) null,
   tp_alocacao int null,
-  id_usuario int not null constraint fk_membro_usuario not null references seguranca.usuario (id)
+  id_profissao int not null constraint fk_membro_profissao not null references corporativo.profissao (id),
+  id_usuario int constraint fk_membro_usuario not null references seguranca.usuario (id)
 );
 
 -- estado_civil
@@ -30,16 +40,6 @@ create table if not exists corporativo.estado_civil (
   id_membro int not null constraint fk_estado_civil_membro not null references corporativo.membro (id)
 );
 
-
--- profissao
-
-create sequence if not exists corporativo.sq_profissao start 1;
-
-create table if not exists corporativo.profissao (
-  id integer constraint pk_profissao primary key,
-  nome varchar(150) null,
-  id_membro int not null constraint fk_profissao_membro not null references corporativo.membro (id)
-);
 
 -- telefone
 
@@ -79,6 +79,15 @@ create table if not exists corporativo.procedencia (
   descricao varchar(150) null
 );
 
+-- cargo
+
+create sequence if not exists corporativo.sq_cargo start 1;
+
+create table if not exists corporativo.cargo (
+  id integer constraint pk_cargo primary key,
+  descricao varchar(150) null
+);
+
 --info_eclesiastica
 
 create sequence if not exists corporativo.sq_info_eclesiastica start 1;
@@ -91,6 +100,7 @@ create table if not exists corporativo.info_eclesiastica (
   tp_cadastro_rol int null,
   numero_ordem varchar(45) null,
   id_procedencia int not null constraint fk_info_eclesiastica_procedencia not null references corporativo.procedencia (id),
+  id_cargo int constraint fk_info_eclesiastica_cargo not null references corporativo.cargo (id),
   id_membro int not null constraint fk_info_eclesiastica_membro not null references corporativo.membro (id)
 );
 
@@ -153,5 +163,6 @@ create table if not exists corporativo.cadastro_membro (
   data_criacao timestamp null,
   ultima_alteracao timestamp null,
   id_membro int not null constraint fk_cadastro_membro_membro not null references corporativo.membro (id),
-  id_usuario int not null constraint fk_cadastro_membro_usuario not null references seguranca.usuario (id)
+  id_cadastrador int not null constraint fk_cadastro_membro_cadastrador not null references corporativo.membro (id),
+  id_validador int not null constraint fk_cadastro_membro_validador not null references corporativo.membro (id)
 );
