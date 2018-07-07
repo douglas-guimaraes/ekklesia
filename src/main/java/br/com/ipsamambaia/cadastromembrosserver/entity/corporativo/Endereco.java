@@ -15,8 +15,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.mockito.NotExtensible;
-
 import br.com.ipsamambaia.cadastromembrosserver.entity.BaseEntity;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.UF;
 import io.swagger.annotations.ApiModel;
