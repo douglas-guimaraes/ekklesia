@@ -60,14 +60,14 @@ create sequence if not exists corporativo.sq_endereco start 1;
 
 create table if not exists corporativo.endereco (
   id integer constraint pk_endereco primary key,
-  cep char(8) null,
-  numero int null,
-  rua varchar(150) null,
+  cep char(8) not null,
+  numero varchar(15) null,
+  rua varchar(150) not null,
   complemento varchar(150) null,
   ponto_referencia varchar(150) null,
-  uf char(2) null,
-  cidade varchar(150) null,
-  bairro varchar(150) null,
+  uf char(2) not null,
+  cidade varchar(150) not null,
+  bairro varchar(150) not null,
   id_membro int not null constraint fk_endereco_membro not null references corporativo.membro (id)
 );
 
@@ -77,7 +77,7 @@ create sequence if not exists corporativo.sq_procedencia start 1;
 
 create table if not exists corporativo.procedencia (
   id integer constraint pk_procedencia primary key,
-  descricao varchar(150) null
+  descricao varchar(150) not null
 );
 
 -- cargo
@@ -86,7 +86,7 @@ create sequence if not exists corporativo.sq_cargo start 1;
 
 create table if not exists corporativo.cargo (
   id integer constraint pk_cargo primary key,
-  descricao varchar(150) null
+  descricao varchar(150) not null
 );
 
 --info_eclesiastica

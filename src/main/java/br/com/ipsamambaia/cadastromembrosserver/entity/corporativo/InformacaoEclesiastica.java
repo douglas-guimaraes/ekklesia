@@ -11,45 +11,58 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import br.com.ipsamambaia.cadastromembrosserver.entity.BaseEntity;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.SituacaoOficialato;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoCadastroRol;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoMembro;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "info_eclesiastica", schema = "corporativo")
+@ApiModel(description = "Representa as informações do membro na igreja")
 public class InformacaoEclesiastica extends BaseEntity<Long> {
 
+    @ApiModelProperty(notes = "Identificador único da informação eclesiástica")
     @Id
     @SequenceGenerator(name = "corporativo.sq_info_eclesiastica", sequenceName = "corporativo.sq_info_eclesiastica", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "corporativo.sq_info_eclesiastica", strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
     
+    @ApiModelProperty(notes = "Tipo de membro")
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "tp_membro")
     private TipoMembro tipoMembro;
     
+    @ApiModelProperty(notes = "Cargo que exerce na igreja")
     @ManyToOne
     @JoinColumn(name = "id_cargo", referencedColumnName = "id")
     private Cargo cargo;
     
+    @ApiModelProperty(notes = "Situação do oficialato (se oficial)")
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "st_oficialato")
     private SituacaoOficialato situacaoOficialato;
     
+    @ApiModelProperty(notes = "Tipo de cadastro no rol de membros")
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "tp_cadastro_rol")
     private TipoCadastroRol tipoCadastroRol;
     
+    @ApiModelProperty(notes = "Número de ordem")
     @Column(name = "numero_ordem")
     private String numeroOrdem;
     
+    @ApiModelProperty(notes = "Procedência do membro")
     @ManyToOne
     @JoinColumn(name = "id_procedencia", referencedColumnName = "id")
     private Procedencia procedencia;
     
+    @ApiModelProperty(notes = "Membro dono do relacionamento")
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "id_membro", referencedColumnName = "id")
     private Membro membro;
