@@ -15,19 +15,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.ipsamambaia.cadastromembrosserver.entity.BaseEntity;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.SituacaoCadastro;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "cadastro_membro", schema = "corporativo")
+@ApiModel(description = "Repesenta o cadastro do membro")
 public class CadastroMembro extends BaseEntity<Long> {
 
+    @ApiModelProperty(notes = "Identificador único do cadastro do membro")
     @Id
     @SequenceGenerator(name = "corporativo.sq_cadastro_membro", sequenceName = "corporativo.sq_cadastro_membro", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "corporativo.sq_cadastro_membro", strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
     
+    @ApiModelProperty(notes = "Situação do cadastro")
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "st_cadastro")
     private SituacaoCadastro situacao;
@@ -38,6 +47,7 @@ public class CadastroMembro extends BaseEntity<Long> {
     @Column(name = "ultima_alteracao")
     private LocalDate dataAlteracao;
 
+    @ApiModelProperty(notes = "Membro dono do relacionamento")
     @ManyToOne
     @JoinColumn(name = "id_membro", referencedColumnName = "id")
     private Membro membro;
@@ -50,6 +60,10 @@ public class CadastroMembro extends BaseEntity<Long> {
     @JoinColumn(name = "id_validador", referencedColumnName = "id")
     private Membro validador;
 
+    public CadastroMembro() {
+        this.dataCriacao = LocalDateTime.now();
+    }
+    
     public Long getId() {
         return id;
     }
