@@ -26,8 +26,8 @@ create table if not exists corporativo.membro (
   tp_escolaridade int null,
   info_adicional varchar(500) null,
   tp_alocacao int null,
-  id_profissao int constraint fk_membro_profissao not null references corporativo.profissao (id),
-  id_usuario int constraint fk_membro_usuario not null references seguranca.usuario (id)
+  id_profissao int constraint fk_membro_profissao null references corporativo.profissao (id),
+  id_usuario int constraint fk_membro_usuario null references seguranca.usuario (id)
 );
 
 -- estado_civil
