@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>cadastro-membro</name>
-	<description>Cadastro de membros da Primeira Igreja Presbiteriana em Samambaia</description>
+	<description>Cadastro de membros da Igreja Presbiteriana do Brasil</description>
 	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
