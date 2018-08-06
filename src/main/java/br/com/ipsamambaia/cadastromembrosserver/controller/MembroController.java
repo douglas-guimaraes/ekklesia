@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/v1/membro/")
 @Api(description = "Conjunto de endpoints para criar, recuperar, atualizar e excluir membros.")
