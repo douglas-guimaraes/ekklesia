@@ -1,13 +1,12 @@
 package br.com.ipsamambaia.cadastromembrosserver.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Membro;
+import br.com.ipsamambaia.cadastromembrosserver.repository.MembroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Membro;
-import br.com.ipsamambaia.cadastromembrosserver.repository.MembroRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MembroService {
@@ -30,7 +29,7 @@ public class MembroService {
     public Membro save(Membro membro) {
         return repository.save(membro);
     }
-    
+
     public void delete(Membro membro) {
         repository.delete(membro);
     }

@@ -1,24 +1,18 @@
 package br.com.ipsamambaia.cadastromembrosserver.controller;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Membro;
 import br.com.ipsamambaia.cadastromembrosserver.service.MembroService;
 import br.com.ipsamambaia.cadastromembrosserver.util.Loggable;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -57,7 +51,7 @@ public class MembroController implements Loggable {
         }
         
         service.delete(resp.getBody());
-        return new ResponseEntity<Membro>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
@@ -65,28 +59,55 @@ public class MembroController implements Loggable {
     public ResponseEntity<Membro> criarMembro(@ApiParam("Dados do membro a ser criado.")
                                    @RequestBody Membro membro) {
         try {
-            membro.setId(null);
-            Membro membroSalvo = service.save(membro);
-            return new ResponseEntity<Membro>(membroSalvo, HttpStatus.OK);
+            updateRefsBeforeCreate(membro);
+            return new ResponseEntity<>(service.save(membro), HttpStatus.OK);
         } catch (Exception e) {
             getLogger().error("Falha ao salvar membro", e);
         }
         
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    
+
     @RequestMapping(method = RequestMethod.PUT, produces = "application/json", path = "/{id}")
-    @ApiOperation("Atualiza um membro existente.")
-    public Membro atualizarMembro(@ApiParam("Identificador do membro a ser atualizado.") @PathVariable long id,
+    @ApiOperation("Atualiza um membro existente. 404 se o identificador informado for inválido.")
+    public ResponseEntity<Membro> atualizarMembro(@ApiParam("Identificador do membro a ser atualizado.") @PathVariable long id,
         @ApiParam("Dados do membro a ser atualizado.") @RequestBody Membro membro) {
-        
-        membro.setId(id);
-        return service.save(membro);
+
+        Optional<Membro> membroTemp = service.findById(id);
+
+        if (!membroTemp.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        membroTemp.get().getTelefones().clear();
+
+        updateRefsBeforeUpdate(membro, membroTemp.get(), id);
+        return ResponseEntity.ok(service.save(membro));
     }
     
     @RequestMapping(method = RequestMethod.GET, produces = "application/json", path = "/quantidade")
     @ApiOperation("Retorna a quantidade de membros cadastrados.")
     public Long contarMembros() {
         return service.count();
+    }
+
+    private void updateRefsBeforeCreate(Membro membro) {
+        membro.setId(null);
+        membro.getEstadoCivil().setId(null);
+        membro.getEstadoCivil().setMembro(membro);
+        membro.getTelefones().forEach(tel -> {
+            tel.setId(null);
+            tel.setMembro(membro);
+        });
+    }
+
+    private void updateRefsBeforeUpdate(Membro membroToUpdate, Membro membroSnapshot, Long id) {
+        membroToUpdate.setId(id);
+        membroToUpdate.getEstadoCivil().setId(membroSnapshot.getEstadoCivil().getId());
+        membroToUpdate.getEstadoCivil().setMembro(membroToUpdate);
+        membroToUpdate.getTelefones().forEach(tel -> {
+//            tel.setId(null);
+            tel.setMembro(membroToUpdate);
+        });
     }
 }

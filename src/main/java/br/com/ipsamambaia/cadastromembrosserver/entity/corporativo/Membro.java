@@ -1,34 +1,23 @@
 package br.com.ipsamambaia.cadastromembrosserver.entity.corporativo;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import br.com.ipsamambaia.cadastromembrosserver.entity.BaseEntity;
 import br.com.ipsamambaia.cadastromembrosserver.entity.seguranca.Usuario;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.Sexo;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoAlocacao;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoEscolaridade;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.UF;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.NonNull;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "membro", schema = "corporativo")
@@ -37,7 +26,7 @@ public class Membro extends BaseEntity<Long> {
 
     @ApiModelProperty(notes = "Identificador único do membro")
     @Id
-    @SequenceGenerator(name = "corporativo.sq_membro", sequenceName = "corporativo.sq_membro", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "corporativo.sq_membro", sequenceName = "corporativo.sq_membro", allocationSize = 1)
     @GeneratedValue(generator = "corporativo.sq_membro", strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
@@ -85,7 +74,7 @@ public class Membro extends BaseEntity<Long> {
     private TipoEscolaridade escolaridade;
     
     @ApiModelProperty(notes = "Informações adicionais sobre o membro")
-    @Size(min = 0, max = 500)
+    @Size(max = 500)
     @Column(name = "info_adicional")
     private String informacaoAdicional;
     
@@ -103,6 +92,20 @@ public class Membro extends BaseEntity<Long> {
     @OneToOne
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private Usuario usuario;
+
+    @NonNull
+    @ApiModelProperty(notes = "Estado civil")
+    @OneToOne(mappedBy = "membro", cascade = CascadeType.ALL)
+    private EstadoCivil estadoCivil;
+
+    @ApiModelProperty(notes = "Telefones")
+    @OneToMany(mappedBy = "membro", cascade = CascadeType.ALL)
+    private List<Telefone> telefones;
+
+    public Membro() {
+        estadoCivil = new EstadoCivil(this);
+        telefones = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
@@ -207,5 +210,20 @@ public class Membro extends BaseEntity<Long> {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
+
+    public EstadoCivil getEstadoCivil() {
+        return estadoCivil;
+    }
+
+    public void setEstadoCivil(EstadoCivil estadoCivil) {
+        this.estadoCivil = estadoCivil;
+    }
+
+    public List<Telefone> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(List<Telefone> telefones) {
+        this.telefones = telefones;
+    }
 }

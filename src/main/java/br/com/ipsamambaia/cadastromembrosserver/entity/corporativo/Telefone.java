@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 
 import br.com.ipsamambaia.cadastromembrosserver.entity.BaseEntity;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoTelefone;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -27,7 +28,7 @@ public class Telefone extends BaseEntity<Long> {
 
     @ApiModelProperty(notes = "Identificador único do telefone")
     @Id
-    @SequenceGenerator(name = "corporativo.sq_telefone", sequenceName = "corporativo.sq_telefone", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "corporativo.sq_telefone", sequenceName = "corporativo.sq_telefone", allocationSize = 1)
     @GeneratedValue(generator = "corporativo.sq_telefone", strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
@@ -53,6 +54,7 @@ public class Telefone extends BaseEntity<Long> {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "id_membro", referencedColumnName = "id")
+    @JsonIgnore
     private Membro membro;
 
     public Long getId() {

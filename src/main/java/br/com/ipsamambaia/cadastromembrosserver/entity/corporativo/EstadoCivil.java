@@ -15,6 +15,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -31,7 +33,7 @@ public class EstadoCivil extends BaseEntity<Long> {
 
     @ApiModelProperty(notes = "Identificador único do estado civil")
     @Id
-    @SequenceGenerator(name = "corporativo.sq_estado_civil", sequenceName = "corporativo.sq_estado_civil", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "corporativo.sq_estado_civil", sequenceName = "corporativo.sq_estado_civil", allocationSize = 1)
     @GeneratedValue(generator = "corporativo.sq_estado_civil", strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
@@ -51,7 +53,12 @@ public class EstadoCivil extends BaseEntity<Long> {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "id_membro", referencedColumnName = "id")
+    @JsonIgnore
     private Membro membro;
+
+    public EstadoCivil() {
+        // empty constructor
+    }
 
     public Long getId() {
         return id;
@@ -76,5 +83,13 @@ public class EstadoCivil extends BaseEntity<Long> {
     public void setDataCasamento(LocalDate dataCasamento) {
         this.dataCasamento = dataCasamento;
     }
-    
+
+    public Membro getMembro() {
+        return membro;
+    }
+
+    public void setMembro(Membro membro) {
+        this.membro = membro;
+    }
+
 }
