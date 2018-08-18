@@ -28,24 +28,18 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "estado_civil", schema = "corporativo")
-@ApiModel(description = "Repesenta um estado civil")
 public class EstadoCivil extends BaseEntity<Long> {
 
-    @ApiModelProperty(notes = "Identificador único do estado civil")
     @Id
     @SequenceGenerator(name = "corporativo.sq_estado_civil", sequenceName = "corporativo.sq_estado_civil", allocationSize = 1)
     @GeneratedValue(generator = "corporativo.sq_estado_civil", strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
-    
-    @ApiModelProperty(notes = "Tipo do estado civil")
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "tp_estado_civil")
     private TipoEstadoCivil estadoCivil;
-    
-    @ApiModelProperty(notes = "Data do casamento se o estado for casado(a)")
-    @JsonFormat(pattern="yyyy-MM-dd")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+
     @Column(name = "data_casamento")
     private LocalDate dataCasamento;
     

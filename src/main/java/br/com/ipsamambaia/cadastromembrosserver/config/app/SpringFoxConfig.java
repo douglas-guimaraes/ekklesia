@@ -38,7 +38,7 @@ public class SpringFoxConfig {
                 "1.0",
                 "#",
                 new Contact("Ministério de Comunicação 1ªIPS","http://www.ipsamambaia.com.br/","contato@ipsamambaia.com.br"),
-                "Licença",
+                "",
                 "#",
                 Collections.emptyList()
         );

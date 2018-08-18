@@ -22,11 +22,11 @@ import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoMembro;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoParentesco;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoTelefone;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.UF;
-import br.com.ipsamambaia.cadastromembrosserver.repository.CargoRepository;
-import br.com.ipsamambaia.cadastromembrosserver.repository.EstadoCivilRepository;
-import br.com.ipsamambaia.cadastromembrosserver.repository.MeioAdmissaoRepository;
-import br.com.ipsamambaia.cadastromembrosserver.repository.ProcedenciaRepository;
-import br.com.ipsamambaia.cadastromembrosserver.repository.ProfissaoRepository;
+import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.CargoRepository;
+import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.EstadoCivilRepository;
+import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.MeioAdmissaoRepository;
+import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.ProcedenciaRepository;
+import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.ProfissaoRepository;
 
 @Service
 public class DominioService {

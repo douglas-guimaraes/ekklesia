@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "cadastro_membro", schema = "corporativo")
-@ApiModel(description = "Repesenta o cadastro do membro")
+
 public class CadastroMembro extends BaseEntity<Long> {
 
     @ApiModelProperty(notes = "Identificador único do cadastro do membro")
@@ -35,12 +35,12 @@ public class CadastroMembro extends BaseEntity<Long> {
     @GeneratedValue(generator = "corporativo.sq_cadastro_membro", strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
-    
+
     @ApiModelProperty(notes = "Situação do cadastro")
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "st_cadastro")
     private SituacaoCadastro situacao;
-    
+
     @Column(name = "data_criacao")
     private LocalDateTime dataCriacao;
 
@@ -51,11 +51,11 @@ public class CadastroMembro extends BaseEntity<Long> {
     @ManyToOne
     @JoinColumn(name = "id_membro", referencedColumnName = "id")
     private Membro membro;
-    
+
     @ManyToOne
     @JoinColumn(name = "id_cadastrador", referencedColumnName = "id")
     private Membro cadastrador;
-    
+
     @ManyToOne
     @JoinColumn(name = "id_validador", referencedColumnName = "id")
     private Membro validador;

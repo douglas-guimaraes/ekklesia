@@ -12,8 +12,9 @@ import io.swagger.annotations.ApiModel;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum TipoTelefone implements EnumJsonCreator {
 
-    FIXO(0, "Fixo"),
-    CELULAR(1, "Celular");
+    FIXO(0, "Residencial"),
+    CELULAR(1, "Celular"),
+    TRABALHO(2, "Trabalho");
     
     private Integer id;
     private String descricao;

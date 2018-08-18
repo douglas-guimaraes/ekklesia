@@ -1,4 +1,4 @@
-package br.com.ipsamambaia.cadastromembrosserver.repository;
+package br.com.ipsamambaia.cadastromembrosserver.repository.seguranca;
 
 import java.util.List;
 
