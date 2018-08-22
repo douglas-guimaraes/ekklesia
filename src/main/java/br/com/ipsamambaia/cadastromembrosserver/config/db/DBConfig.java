@@ -10,12 +10,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
-@Configuration
+// TODO: douglas - altrar estratégia de datasource
+//@Configurationa
 public class DBConfig {
 
-    @Bean
-    @Primary
-    @ConfigurationProperties(prefix = "spring.datasource")
+//    @Bean
+//    @Primary
+//    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() throws URISyntaxException {
         return DataSourceBuilder
             .create()
