@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "${origin.host}", maxAge = 3600)
 @RestController
 @RequestMapping("/v1/membro/")
 @Api(description = "Conjunto de endpoints para criar, recuperar, atualizar e excluir membros.")

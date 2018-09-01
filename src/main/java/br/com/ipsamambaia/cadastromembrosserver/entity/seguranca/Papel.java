@@ -14,6 +14,8 @@ import br.com.ipsamambaia.cadastromembrosserver.entity.BaseEntity;
 @Table(name = "papel", schema = "seguranca")
 public class Papel extends BaseEntity<Long> {
 
+    public static final Papel NOME_PAPEL = new Papel(1L);
+
     @Id
     @SequenceGenerator(name = "seguranca.sq_papel", sequenceName = "seguranca.sq_papel", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "seguranca.sq_papel", strategy = GenerationType.SEQUENCE)
@@ -22,6 +24,14 @@ public class Papel extends BaseEntity<Long> {
     
     @Column(name = "nome")
     private String nome;
+
+    public Papel() {
+        // default constructor
+    }
+
+    public Papel(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

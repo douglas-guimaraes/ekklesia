@@ -1,10 +1,12 @@
 package br.com.ipsamambaia.cadastromembrosserver.util;
 
-import org.jboss.logging.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public interface Loggable {
 
-    default Logger getLogger() {
-        return Logger.getLogger(getClass());
+    default Log getLogger() {
+        return LogFactory.getLog(getClass());
     }
 }
+
