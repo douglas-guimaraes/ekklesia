@@ -32,7 +32,7 @@ public class TokenController {
     @RequestMapping(path = "/generate", method = RequestMethod.POST)
     public ResponseEntity<Token> authenticate(@RequestBody AccountCredentials account) throws AuthenticationException {
         final Authentication authentication = usuarioService.authenticate(
-                new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword())
+                new UsernamePasswordAuthenticationToken(account.getEmail(), account.getPassword())
         );
 
         if (authentication != null) {
