@@ -7,6 +7,7 @@ import br.com.ipsamambaia.cadastromembrosserver.service.security.UsuarioService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,14 +31,17 @@ public class TokenController {
     @ApiOperation("Gera o token para as credenciais informadas. " +
             "O token gerado deve ser utilizado para todas as operações que requerem autenticação.")
     @RequestMapping(path = "/generate", method = RequestMethod.POST)
-    public ResponseEntity<Token> authenticate(@RequestBody AccountCredentials account) throws AuthenticationException {
+    public ResponseEntity<?> authenticate(@RequestBody AccountCredentials account) throws AuthenticationException {
         final Authentication authentication = usuarioService.authenticate(
                 new UsernamePasswordAuthenticationToken(account.getEmail(), account.getPassword())
         );
 
         if (authentication != null) {
+            HttpHeaders headers = new HttpHeaders();
+            Token token = tokenProvider.generateToken(authentication);
+            headers.add("token", token.getToken());
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return ResponseEntity.ok(tokenProvider.generateToken(authentication));
+            return new ResponseEntity<>(headers, HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
