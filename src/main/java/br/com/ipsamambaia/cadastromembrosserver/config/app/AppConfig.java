@@ -23,11 +23,10 @@ public class AppConfig {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
+                registry.addMapping("/v1/**")
                         .allowedOrigins(allowedOrigins)
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedHeaders("header1", "header2", "header3")
-                        .exposedHeaders("header1", "header2")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("origin", "x-requested-with", "content-type")
                         .allowCredentials(false).maxAge(3600);
             }
         };
