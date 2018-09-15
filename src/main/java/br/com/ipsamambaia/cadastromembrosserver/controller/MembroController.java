@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,8 @@ public class MembroController implements Loggable {
     
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     @ApiOperation("Retorna uma lista de todos os membros.")
-    public List<Membro> obterTodosMembros() {
-        return service.findAll();
+    public List<Membro> obterTodosMembros(Pageable pageable) {
+        return service.findAll(pageable);
     }
     
     @RequestMapping(method = RequestMethod.GET, path = "/{id}", produces = "application/json")

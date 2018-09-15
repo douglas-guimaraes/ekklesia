@@ -7,6 +7,8 @@ import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.EstadoCiv
 import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.MembroRepository;
 import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.TelefoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,8 +35,8 @@ public class MembroService {
         return membroRepository.count();
     }
     
-    public List<Membro> findAll() {
-        return membroRepository.findAll();
+    public List<Membro> findAll(Pageable pageable) {
+        return membroRepository.findAll(pageable).getContent();
     }
     
     public Optional<Membro> findById(Long id) {
