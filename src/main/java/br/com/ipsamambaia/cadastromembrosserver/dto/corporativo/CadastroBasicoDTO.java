@@ -122,6 +122,7 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
         membro.setDataNascimento(this.dataNascimento);
         membro.setSexo(this.sexo);
         membro.setNaturalidade(this.naturalidade);
+        membro.setUfNaturalidade(this.ufNaturalidade);
         membro.setRg(this.rg);
         membro.setCpf(this.cpf);
         membro.setOrgaoEmissor(this.orgaoEmissor);
