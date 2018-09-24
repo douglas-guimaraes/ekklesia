@@ -37,6 +37,10 @@ public class MembroService {
     public List<Membro> findAll(Pageable pageable) {
         return membroRepository.findAll(pageable).getContent();
     }
+
+    public List<Membro> findByFilter(String filter, Pageable pageable) {
+        return membroRepository.findByFilter(filter, pageable).getContent();
+    }
     
     public Optional<Membro> findById(Long id) {
         return membroRepository.findById(id);
@@ -50,10 +54,7 @@ public class MembroService {
     }
 
     public CadastroBasicoDTO update(Membro membroTemp, CadastroBasicoDTO cadastroBasico) {
-        estadoCivilRepository.delete(estadoCivilRepository.findByMembro(membroTemp));
-        telefoneRepository.deleteAll(telefoneRepository.findByMembro(membroTemp));
-        enderecoRepository.deleteAll(enderecoRepository.findEnderecoByMembro(membroTemp));
-
+        deleteDependents(membroTemp);
         Membro membro = membroRepository.save(cadastroBasico.toEntity(membroTemp.getId()));
         saveDependents(cadastroBasico, membro);
 
@@ -61,6 +62,7 @@ public class MembroService {
     }
 
     public void delete(Membro membro) {
+        deleteDependents(membro);
         membroRepository.delete(membro);
     }
 
@@ -68,5 +70,11 @@ public class MembroService {
         cadastroBasico.toEstadoCivilEntity(membro).ifPresent(estadoCivilRepository::save);
         cadastroBasico.toTelefonesEntities(membro).ifPresent(telefoneRepository::saveAll);
         cadastroBasico.toEnderecosEntities(membro).ifPresent(enderecoRepository::saveAll);
+    }
+
+    private void deleteDependents(Membro membroTemp) {
+        estadoCivilRepository.delete(estadoCivilRepository.findByMembro(membroTemp));
+        telefoneRepository.deleteAll(telefoneRepository.findByMembro(membroTemp));
+        enderecoRepository.deleteAll(enderecoRepository.findEnderecoByMembro(membroTemp));
     }
 }
