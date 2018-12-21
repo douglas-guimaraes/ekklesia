@@ -22,8 +22,12 @@ public class ProfissaoDTO extends BaseDTO<Long> {
     }
 
     public ProfissaoDTO(Long id, String descricao) {
-        this.id = id;
+        this(id);
         this.descricao = descricao;
+    }
+    
+    public ProfissaoDTO(Long id) {
+    	this.id = id;
     }
 
     public ProfissaoDTO(Profissao profissao) {

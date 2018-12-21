@@ -1,7 +1,10 @@
 package br.com.ipsamambaia.cadastromembrosserver.service;
 
 import br.com.ipsamambaia.cadastromembrosserver.dto.corporativo.CadastroBasicoDTO;
+import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Endereco;
+import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.EstadoCivil;
 import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Membro;
+import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Telefone;
 import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.EnderecoRepository;
 import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.EstadoCivilRepository;
 import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.MembroRepository;
@@ -11,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +43,8 @@ public class MembroService {
     }
 
     public List<Membro> findByFilter(String filter, Pageable pageable) {
-        return membroRepository.findByFilter(filter, pageable).getContent();
+//        return membroRepository.findByFilter(filter, pageable).getContent();
+    	return Collections.emptyList();
     }
     
     public Optional<Membro> findById(Long id) {
@@ -73,8 +78,11 @@ public class MembroService {
     }
 
     private void deleteDependents(Membro membroTemp) {
-        estadoCivilRepository.delete(estadoCivilRepository.findByMembro(membroTemp));
-        telefoneRepository.deleteAll(telefoneRepository.findByMembro(membroTemp));
-        enderecoRepository.deleteAll(enderecoRepository.findEnderecoByMembro(membroTemp));
+    	EstadoCivil estadoCivil = estadoCivilRepository.findByMembro(membroTemp);
+    	List<Telefone> telefones = telefoneRepository.findByMembro(membroTemp);
+    	List<Endereco> enderecos = enderecoRepository.findEnderecoByMembro(membroTemp);
+    	if(estadoCivil != null) estadoCivilRepository.delete(estadoCivil);
+    	if(telefones != null) telefoneRepository.deleteAll(telefones);
+    	if(enderecos != null) enderecoRepository.deleteAll(enderecos);
     }
 }

@@ -28,7 +28,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@CrossOrigin(origins = "${origin.host}", maxAge = 3600)
 @RequestMapping("/v1/dominio/")
 @Api(description = "Conjunto de endpoints com os domínios da aplicação.")
 public class DominioController {

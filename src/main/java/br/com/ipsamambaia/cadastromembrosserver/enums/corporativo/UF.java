@@ -12,39 +12,41 @@ import io.swagger.annotations.ApiModel;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum UF implements EnumJsonCreator {
     
-    AC(0, "Acre"),
-    AL(1, "Alagoas"),
-    AP(2, "Amapá"),
-    AM(3, "Amazonas"),
-    BA(4, "Bahia"),
-    CE(5, "Ceará"),
-    DF(6, "Distrito Federal"),
-    ES(7, "Espírito Santo"),
-    GO(8, "Goiás"),
-    MA(9, "Maranhão"),
-    MT(10, "Mato Grosso"),
-    MS(11, "Mato Grosso do Sul"),
-    MG(12, "Minas Gerais"),
-    PA(13, "Pará"),
-    PB(14, "Paraíba"),
-    PR(15, "Paraná"),
-    PE(16, "Pernambuco"),
-    PI(17, "Piauí"),
-    RJ(18, "Rio de Janeiro"),
-    RN(19, "Rio Grande do Norte"),
-    RS(20, "Rio Grande do Sul"),
-    RO(21, "Rondônia"),
-    RR(22, "Roraima"),
-    SC(23, "Santa Catarina"),
-    SP(24, "São Paulo"),
-    SE(25, "Sergipe"),
-    TO(26, "Tocantins");
+    AC(0, "AC", "Acre"),
+    AL(1, "AL", "Alagoas"),
+    AP(2, "AP", "Amapá"),
+    AM(3, "AM", "Amazonas"),
+    BA(4, "BA", "Bahia"),
+    CE(5, "CE", "Ceará"),
+    DF(6, "DF", "Distrito Federal"),
+    ES(7, "ES", "Espírito Santo"),
+    GO(8, "GO", "Goiás"),
+    MA(9, "MA", "Maranhão"),
+    MT(10, "MT", "Mato Grosso"),
+    MS(11, "MS", "Mato Grosso do Sul"),
+    MG(12, "MG", "Minas Gerais"),
+    PA(13, "PA", "Pará"),
+    PB(14, "PB", "Paraíba"),
+    PR(15, "PR", "Paraná"),
+    PE(16, "PE", "Pernambuco"),
+    PI(17, "PI", "Piauí"),
+    RJ(18, "RJ", "Rio de Janeiro"),
+    RN(19, "RN", "Rio Grande do Norte"),
+    RS(20, "RS", "Rio Grande do Sul"),
+    RO(21, "RO", "Rondônia"),
+    RR(22, "RR", "Roraima"),
+    SC(23, "SC", "Santa Catarina"),
+    SP(24, "SP", "São Paulo"),
+    SE(25, "SE", "Sergipe"),
+    TO(26, "TO", "Tocantins");
 
     private Integer id;
+    private String sigla;
     private String descricao;
 
-    private UF(Integer id, String descricao) {
+    private UF(Integer id, String sigla, String descricao) {
         this.id = id;
+        this.sigla = sigla;
         this.descricao = descricao;
     }
     
@@ -52,6 +54,10 @@ public enum UF implements EnumJsonCreator {
         return id;
     }
     
+    public String getSigla() {
+        return sigla;
+    }
+
     public String getDescricao() {
         return descricao;
     }
@@ -80,6 +86,15 @@ public enum UF implements EnumJsonCreator {
         }
 
         return null;
+    }
+    
+    public static UF fromSigla(String sigla) {
+    	for (UF e : UF.values()) {
+            if (sigla.equals(e.getSigla())) {
+                return e;
+            }
+        }
+    	return null;
     }
     
 }

@@ -90,15 +90,15 @@ public class MembroServiceTest {
         CadastroBasicoDTO cdDTO = new CadastroBasicoDTO();
         cdDTO.setNome("Membro 1 IPS" + valor);
         cdDTO.setDataNascimento(LocalDate.of(1989 + valor, 10 + valor, 25 + valor));
-        cdDTO.setSexo(impar(valor) ? Sexo.MASCULINO : Sexo.FEMININO);
+        cdDTO.setSexo(impar(valor) ? Sexo.MASCULINO.getId() : Sexo.FEMININO.getId());
         cdDTO.setCpf("1111111111" + valor);
         cdDTO.setRg("123455" + valor);
         cdDTO.setNaturalidade("Brasília" + valor);
-        cdDTO.setUfNaturalidade(impar(valor) ? UF.DF : UF.SP);
+        cdDTO.setUfNaturalidade(impar(valor) ? UF.DF.getSigla() : UF.SP.getSigla());
         cdDTO.setOrgaoEmissor("SSP/DF" + valor);
-        cdDTO.setEscolaridade(TipoEscolaridade.ALFABETIZADO);
-        cdDTO.setProfissao(criarProfissao(valor));
-        cdDTO.setEstadoCivil(criarEstadoCivil(valor));
+        cdDTO.setEscolaridade(TipoEscolaridade.ALFABETIZADO.getId());
+        cdDTO.setProfissao(criarProfissao(valor).getId());
+//        cdDTO.setEstadoCivil(criarEstadoCivil(valor));
         cdDTO.setTelefones(criarTelefones(valor));
         cdDTO.setEnderecos(criarEnderecos(valor));
         cdDTO.setInformacaoAdicional("Nenhuma" + valor);
@@ -141,7 +141,7 @@ public class MembroServiceTest {
         e1.setNumero("45" + valor);
         e1.setPontoReferencia("Próximo ao shopping" + valor);
         e1.setRua("Quadra XPTO" + valor);
-        e1.setUf(impar(valor) ? UF.DF : UF.RS);
+        e1.setUf(impar(valor) ? UF.DF.getSigla() : UF.RS.getSigla());
         EnderecoDTO e2 = new EnderecoDTO();
         e2.setCep(valor + "1556285");
         e2.setBairro(valor + "Boa Vista");
@@ -150,7 +150,7 @@ public class MembroServiceTest {
         e2.setNumero(valor + "47");
         e2.setPontoReferencia(valor + "Ao lado da escola");
         e2.setRua(valor + "Quadra Grande");
-        e2.setUf(impar(valor ) ? UF.SP: UF.PE);
+        e2.setUf(impar(valor ) ? UF.SP.getSigla(): UF.PE.getSigla());
         return Arrays.asList(e1, e2);
     }
 
@@ -173,7 +173,7 @@ public class MembroServiceTest {
         assertEquals(membroDB.get().getEscolaridade(), cadastro.getEscolaridade());
         assertEquals(membroDB.get().getInformacaoAdicional(), cadastro.getInformacaoAdicional());
         assertEquals(membroDB.get().getAlocacao(), cadastro.getAlocacao());
-        assertEquals(membroDB.get().getProfissao().getId(), cadastro.getProfissao().getId());
+        assertEquals(membroDB.get().getProfissao().getId(), cadastro.getProfissao());
         assertNotNull(estadoCivilRepository.findByMembro(membroDB.get()));
 
         List<Telefone> telefones = telefoneRepository.findByMembro(membroDB.get());

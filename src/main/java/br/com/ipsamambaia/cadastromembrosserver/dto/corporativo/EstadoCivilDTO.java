@@ -35,9 +35,9 @@ public class EstadoCivilDTO extends BaseDTO<Long> {
         this.dataCasamento = estadoCivil.getDataCasamento();
     }
 
-    public EstadoCivil toEntity(Membro membro) {
+    public EstadoCivil toEntity(Membro membro, Integer idEstadoCivil) {
         EstadoCivil estadoCivil = new EstadoCivil();
-        estadoCivil.setEstadoCivil(this.estadoCivil);
+        estadoCivil.setEstadoCivil(TipoEstadoCivil.fromId(idEstadoCivil));
         estadoCivil.setDataCasamento(this.dataCasamento);
         estadoCivil.setMembro(membro);
         return estadoCivil;

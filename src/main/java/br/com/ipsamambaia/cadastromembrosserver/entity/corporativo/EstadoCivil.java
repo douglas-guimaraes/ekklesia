@@ -53,6 +53,10 @@ public class EstadoCivil extends BaseEntity<Long> {
     public EstadoCivil() {
         // empty constructor
     }
+    
+    public EstadoCivil(Long id) {
+    	this.id = id;
+    }
 
     public Long getId() {
         return id;

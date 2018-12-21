@@ -1,3 +1,4 @@
+
 -- MEIO ADMISSÃO
 INSERT INTO corporativo.meio_admissao values (nextval('corporativo.sq_meio_admissao'), 'Ata de organização');
 INSERT INTO corporativo.meio_admissao values (nextval('corporativo.sq_meio_admissao'), 'Batismo infantil');

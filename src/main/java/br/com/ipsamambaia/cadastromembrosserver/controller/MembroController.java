@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "${origin.host}", maxAge = 3600)
 @RestController
-@RequestMapping("/v1/membro/")
+@RequestMapping(path = "/v1/membro/", consumes = MediaType.APPLICATION_JSON_VALUE, produces =  MediaType.APPLICATION_JSON_VALUE)
 @Api(description = "Conjunto de endpoints para criar, recuperar, atualizar e excluir membros.")
 public class MembroController implements Loggable {
 
@@ -56,7 +57,7 @@ public class MembroController implements Loggable {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", path = "cadastrobasico")
+    @RequestMapping(method = RequestMethod.POST, path = "cadastrobasico")
     @ApiOperation("Cria um novo cadastro básico.")
     public ResponseEntity<CadastroBasicoDTO> criarCadastroBasico(@ApiParam("Novos dados básicos de um membro.")
                                    @RequestBody CadastroBasicoDTO cadastroBasico) {

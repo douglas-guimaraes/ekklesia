@@ -35,11 +35,11 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
 
     @ApiModelProperty(notes = "Data de nascimento")
     @JsonFormat(pattern="yyyy-MM-dd")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataNascimento;
 
     @ApiModelProperty(notes = "Sexo")
-    private Sexo sexo;
+    private Integer sexo;
 
     @ApiModelProperty(notes = "CPF")
     @Size(min = 11, max = 11)
@@ -54,30 +54,30 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
     private String naturalidade;
 
     @ApiModelProperty(notes = "UF da naturalidade")
-    private UF ufNaturalidade;
+    private String ufNaturalidade;
 
     @ApiModelProperty(notes = "Órgão emissor do Registro Geral")
     @Size(min = 1, max = 10)
     private String orgaoEmissor;
 
     @ApiModelProperty(notes = "Escolaridade")
-    private TipoEscolaridade escolaridade;
+    private Integer escolaridade;
 
     @ApiModelProperty(notes = "Informações adicionais sobre o membro")
     @Size(max = 500)
     private String informacaoAdicional;
 
     @ApiModelProperty(notes = "Tipo de alocação")
-    private TipoAlocacao alocacao;
+    private Integer alocacao;
 
     @ApiModelProperty(notes = "Profissão")
-    private ProfissaoDTO profissao;
+    private Long profissao;
 
     @ApiModelProperty(notes = "Credenciais no sistema")
     private UsuarioDTO usuario;
 
     @ApiModelProperty(notes = "Estado civil")
-    private EstadoCivilDTO estadoCivil;
+    private Integer estadoCivil;
 
     private List<TelefoneDTO> telefones = new ArrayList<>();
 
@@ -96,16 +96,16 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
         this.id = membro.getId();
         this.nome = membro.getNome();
         this.dataNascimento = membro.getDataNascimento();
-        this.sexo = membro.getSexo();
+        this.sexo = membro.getSexo().getId();
         this.cpf = membro.getCpf();
         this.rg = membro.getRg();
         this.naturalidade = membro.getNaturalidade();
-        this.ufNaturalidade = membro.getUfNaturalidade();
+        this.ufNaturalidade = membro.getUfNaturalidade().getSigla();
         this.orgaoEmissor = membro.getOrgaoEmissor();
-        this.escolaridade = membro.getEscolaridade();
+        this.escolaridade = membro.getEscolaridade().getId();
         this.informacaoAdicional = membro.getInformacaoAdicional();
-        this.alocacao = membro.getAlocacao();
-        profissao.ifPresent(p -> this.profissao = new ProfissaoDTO(p));
+        this.alocacao = membro.getAlocacao().getId();
+        profissao.ifPresent(p -> this.profissao = membro.getProfissao().getId());
         usuario.ifPresent(u -> this.usuario = new UsuarioDTO(u));
         telefones.ifPresent(tels -> {
             tels.forEach(t -> this.telefones.add(new TelefoneDTO(t)));
@@ -120,18 +120,16 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
         membro.setId(id);
         membro.setNome(this.nome);
         membro.setDataNascimento(this.dataNascimento);
-        membro.setSexo(this.sexo);
+        membro.setSexo(Sexo.fromId(this.sexo));
         membro.setNaturalidade(this.naturalidade);
-        membro.setUfNaturalidade(this.ufNaturalidade);
+        membro.setUfNaturalidade(UF.fromSigla(this.ufNaturalidade));
         membro.setRg(this.rg);
         membro.setCpf(this.cpf);
         membro.setOrgaoEmissor(this.orgaoEmissor);
-        membro.setEscolaridade(this.escolaridade);
+        membro.setEscolaridade(TipoEscolaridade.fromId(this.escolaridade));
         membro.setInformacaoAdicional(this.informacaoAdicional);
-        membro.setAlocacao(this.alocacao);
-        if (DTOUtil.valid(this.profissao)) {
-            membro.setProfissao(new Profissao(this.profissao.getId()));
-        }
+        membro.setAlocacao(TipoAlocacao.fromId(this.alocacao));
+        membro.setProfissao(new Profissao(this.profissao));
         if (DTOUtil.valid(this.usuario)) {
             membro.setUsuario(new Usuario(this.usuario.getId(),
                     this.usuario.getEmail(), this.usuario.getSenha()));
@@ -141,7 +139,7 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
 
     public Optional<EstadoCivil> toEstadoCivilEntity(Membro membro) {
         if (this.estadoCivil != null) {
-            return Optional.of(estadoCivil.toEntity(membro));
+            return Optional.of(new EstadoCivilDTO().toEntity(membro, this.estadoCivil));
         }
 
         return Optional.empty();
@@ -186,11 +184,11 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
         this.dataNascimento = dataNascimento;
     }
 
-    public Sexo getSexo() {
+    public Integer getSexo() {
         return sexo;
     }
 
-    public void setSexo(Sexo sexo) {
+    public void setSexo(Integer sexo) {
         this.sexo = sexo;
     }
 
@@ -218,11 +216,11 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
         this.naturalidade = naturalidade;
     }
 
-    public UF getUfNaturalidade() {
+    public String getUfNaturalidade() {
         return ufNaturalidade;
     }
 
-    public void setUfNaturalidade(UF ufNaturalidade) {
+    public void setUfNaturalidade(String ufNaturalidade) {
         this.ufNaturalidade = ufNaturalidade;
     }
 
@@ -234,11 +232,11 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
         this.orgaoEmissor = orgaoEmissor;
     }
 
-    public TipoEscolaridade getEscolaridade() {
+    public Integer getEscolaridade() {
         return escolaridade;
     }
 
-    public void setEscolaridade(TipoEscolaridade escolaridade) {
+    public void setEscolaridade(Integer escolaridade) {
         this.escolaridade = escolaridade;
     }
 
@@ -250,19 +248,19 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
         this.informacaoAdicional = informacaoAdicional;
     }
 
-    public TipoAlocacao getAlocacao() {
+    public Integer getAlocacao() {
         return alocacao;
     }
 
-    public void setAlocacao(TipoAlocacao alocacao) {
+    public void setAlocacao(Integer alocacao) {
         this.alocacao = alocacao;
     }
 
-    public ProfissaoDTO getProfissao() {
+    public Long getProfissao() {
         return profissao;
     }
 
-    public void setProfissao(ProfissaoDTO profissao) {
+    public void setProfissao(Long profissao) {
         this.profissao = profissao;
     }
 
@@ -274,11 +272,11 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
         this.usuario = usuario;
     }
 
-    public EstadoCivilDTO getEstadoCivil() {
+    public Integer getEstadoCivil() {
         return estadoCivil;
     }
 
-    public void setEstadoCivil(EstadoCivilDTO estadoCivil) {
+    public void setEstadoCivil(Integer estadoCivil) {
         this.estadoCivil = estadoCivil;
     }
 
