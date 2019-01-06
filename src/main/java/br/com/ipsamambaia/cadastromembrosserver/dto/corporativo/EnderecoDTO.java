@@ -40,7 +40,7 @@ public class EnderecoDTO extends BaseDTO<Long> {
 
     @ApiModelProperty(notes = "UF")
     @NotNull
-    private String uf;
+    private UF uf;
 
     @ApiModelProperty(notes = "Cidade")
     @NotBlank
@@ -63,7 +63,7 @@ public class EnderecoDTO extends BaseDTO<Long> {
         this.rua = endereco.getRua();
         this.complemento = endereco.getComplemento();
         this.pontoReferencia = endereco.getPontoReferencia();
-        this.uf = endereco.getUf().getSigla();
+        this.uf = endereco.getUf();
         this.cidade = endereco.getCidade();
         this.bairro = endereco.getBairro();
     }
@@ -75,7 +75,7 @@ public class EnderecoDTO extends BaseDTO<Long> {
         endereco.setRua(this.rua);
         endereco.setComplemento(this.complemento);
         endereco.setPontoReferencia(this.pontoReferencia);
-        endereco.setUf(UF.fromSigla((this.uf)));
+        endereco.setUf(this.uf);
         endereco.setCidade(this.cidade);
         endereco.setBairro(this.bairro);
         endereco.setMembro(membro);
@@ -131,11 +131,11 @@ public class EnderecoDTO extends BaseDTO<Long> {
         this.pontoReferencia = pontoReferencia;
     }
 
-    public String getUf() {
+    public UF getUf() {
         return uf;
     }
 
-    public void setUf(String uf) {
+    public void setUf(UF uf) {
         this.uf = uf;
     }
 

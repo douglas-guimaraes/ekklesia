@@ -1,15 +1,17 @@
 package br.com.ipsamambaia.cadastromembrosserver.dto.corporativo;
 
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.ipsamambaia.cadastromembrosserver.dto.BaseDTO;
 import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.EstadoCivil;
 import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Membro;
 import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoEstadoCivil;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
 
 @ApiModel(value = "Estado civil")
 public class EstadoCivilDTO extends BaseDTO<Long> {
@@ -35,9 +37,9 @@ public class EstadoCivilDTO extends BaseDTO<Long> {
         this.dataCasamento = estadoCivil.getDataCasamento();
     }
 
-    public EstadoCivil toEntity(Membro membro, Integer idEstadoCivil) {
+    public EstadoCivil toEntity(Membro membro) {
         EstadoCivil estadoCivil = new EstadoCivil();
-        estadoCivil.setEstadoCivil(TipoEstadoCivil.fromId(idEstadoCivil));
+        estadoCivil.setEstadoCivil(this.estadoCivil);
         estadoCivil.setDataCasamento(this.dataCasamento);
         estadoCivil.setMembro(membro);
         return estadoCivil;
