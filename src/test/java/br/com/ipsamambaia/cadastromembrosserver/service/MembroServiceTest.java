@@ -90,13 +90,13 @@ public class MembroServiceTest {
         CadastroBasicoDTO cdDTO = new CadastroBasicoDTO();
         cdDTO.setNome("Membro 1 IPS" + valor);
         cdDTO.setDataNascimento(LocalDate.of(1989 + valor, 10 + valor, 25 + valor));
-        cdDTO.setSexo(impar(valor) ? Sexo.MASCULINO : Sexo.FEMININO);
+        cdDTO.setIdSexo(impar(valor) ? Sexo.MASCULINO.getId() : Sexo.FEMININO.getId());
         cdDTO.setCpf("1111111111" + valor);
         cdDTO.setRg("123455" + valor);
         cdDTO.setNaturalidade("Brasília" + valor);
-        cdDTO.setUfNaturalidade(impar(valor) ? UF.DF : UF.SP);
+        cdDTO.setSiglaUfNaturalidade(impar(valor) ? UF.DF.getSigla() : UF.SP.getSigla());
         cdDTO.setOrgaoEmissor("SSP/DF" + valor);
-        cdDTO.setEscolaridade(TipoEscolaridade.ALFABETIZADO);
+        cdDTO.setIdEscolaridade(TipoEscolaridade.ALFABETIZADO.getId());
         cdDTO.setProfissao(criarProfissao(valor));
         cdDTO.setEstadoCivil(criarEstadoCivil(valor));
         cdDTO.setTelefones(criarTelefones(valor));
