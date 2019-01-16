@@ -9,6 +9,7 @@ import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.UF;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "membro", schema = "corporativo")
