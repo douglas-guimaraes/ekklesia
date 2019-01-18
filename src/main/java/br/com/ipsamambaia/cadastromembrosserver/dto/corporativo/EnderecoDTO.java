@@ -52,7 +52,7 @@ public class EnderecoDTO extends BaseDTO<Long> {
     @Size(min = 1, max = 150)
     private String bairro;
     
-    private String siglaUF;
+    private String siglaUf;
 
     public EnderecoDTO() {
         // default constructor
@@ -77,7 +77,7 @@ public class EnderecoDTO extends BaseDTO<Long> {
         endereco.setRua(this.rua);
         endereco.setComplemento(this.complemento);
         endereco.setPontoReferencia(this.pontoReferencia);
-        endereco.setUf(UF.fromSigla(this.siglaUF));
+        endereco.setUf(UF.fromSigla(this.siglaUf));
         endereco.setCidade(this.cidade);
         endereco.setBairro(this.bairro);
         endereco.setMembro(membro);
@@ -157,11 +157,11 @@ public class EnderecoDTO extends BaseDTO<Long> {
         this.bairro = bairro;
     }
     
-    public String getSiglaUF() {
-		return siglaUF;
+    public String getSiglaUf() {
+		return siglaUf;
 	}
     
-    public void setSiglaUF(String siglaUF) {
-		this.siglaUF = siglaUF;
+    public void setSiglaUF(String siglaUf) {
+		this.siglaUf = siglaUf;
 	}
 }

@@ -50,7 +50,7 @@ public enum Sexo implements EnumJsonCreator {
 
     public static Sexo fromId(final Integer id) {
         for (Sexo e : Sexo.values()) {
-            if (id.equals(e.getId())) {
+            if (e.getId().equals(id)) {
                 return e;
             }
         }

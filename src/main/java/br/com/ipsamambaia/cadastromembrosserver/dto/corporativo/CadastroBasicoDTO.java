@@ -1,334 +1,336 @@
 package br.com.ipsamambaia.cadastromembrosserver.dto.corporativo;
 
-import br.com.ipsamambaia.cadastromembrosserver.dto.BaseDTO;
-import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.*;
-import br.com.ipsamambaia.cadastromembrosserver.entity.seguranca.Usuario;
-import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.Sexo;
-import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoAlocacao;
-import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoEscolaridade;
-import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.UF;
-import br.com.ipsamambaia.cadastromembrosserver.util.DTOUtil;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import br.com.ipsamambaia.cadastromembrosserver.dto.BaseDTO;
+import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Endereco;
+import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.EstadoCivil;
+import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Membro;
+import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Profissao;
+import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Telefone;
+import br.com.ipsamambaia.cadastromembrosserver.entity.seguranca.Usuario;
+import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.Sexo;
+import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoAlocacao;
+import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.TipoEscolaridade;
+import br.com.ipsamambaia.cadastromembrosserver.enums.corporativo.UF;
+import br.com.ipsamambaia.cadastromembrosserver.util.DTOUtil;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @ApiModel(value = "Cadastro básico")
 public class CadastroBasicoDTO extends BaseDTO<Long> {
 
-    @ApiModelProperty(notes = "Identificador único do membro")
-    private Long id;
+	@ApiModelProperty(notes = "Identificador único do membro")
+	private Long id;
 
-    @ApiModelProperty(notes = "Nome", required = true)
-    @NotBlank
-    @Size(min = 1, max = 150)
-    private String nome;
+	@ApiModelProperty(notes = "Nome", required = true)
+	@NotBlank
+	@Size(min = 1, max = 150)
+	private String nome;
 
-    @ApiModelProperty(notes = "Data de nascimento")
-    @JsonFormat(pattern="yyyy-MM-dd")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate dataNascimento;
+	@ApiModelProperty(notes = "Data de nascimento")
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSS'Z'")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+	private LocalDateTime dataNascimento;
 
-    @ApiModelProperty(notes = "Sexo")
-    private Sexo sexo;
+	@ApiModelProperty(notes = "Sexo")
+	private Sexo sexo;
 
-    @ApiModelProperty(notes = "CPF")
-    @Size(min = 11, max = 11)
-    private String cpf;
+	@ApiModelProperty(notes = "CPF")
+	@Size(min = 11, max = 11)
+	private String cpf;
 
-    @ApiModelProperty(notes = "Registro Geral")
-    @Size(min = 1, max = 15)
-    private String rg;
+	@ApiModelProperty(notes = "Registro Geral")
+	@Size(min = 1, max = 15)
+	private String rg;
 
-    @ApiModelProperty(notes = "Naturalidade")
-    @Size(min = 1, max = 150)
-    private String naturalidade;
+	@ApiModelProperty(notes = "Naturalidade")
+	@Size(min = 1, max = 150)
+	private String naturalidade;
 
-    @ApiModelProperty(notes = "UF da naturalidade")
-    private UF ufNaturalidade;
+	@ApiModelProperty(notes = "UF da naturalidade")
+	private UF ufNaturalidade;
 
-    @ApiModelProperty(notes = "Órgão emissor do Registro Geral")
-    @Size(min = 1, max = 10)
-    private String orgaoEmissor;
+	@ApiModelProperty(notes = "Órgão emissor do Registro Geral")
+	@Size(min = 1, max = 10)
+	private String orgaoEmissor;
 
-    @ApiModelProperty(notes = "Escolaridade")
-    private TipoEscolaridade escolaridade;
+	@ApiModelProperty(notes = "Escolaridade")
+	private TipoEscolaridade escolaridade;
 
-    @ApiModelProperty(notes = "Informações adicionais sobre o membro")
-    @Size(max = 500)
-    private String informacaoAdicional;
+	@ApiModelProperty(notes = "Informações adicionais sobre o membro")
+	@Size(max = 500)
+	private String informacaoAdicional;
 
-    @ApiModelProperty(notes = "Tipo de alocação")
-    private TipoAlocacao alocacao;
+	@ApiModelProperty(notes = "Tipo de alocação")
+	private TipoAlocacao alocacao;
 
-    @ApiModelProperty(notes = "Profissão")
-    private ProfissaoDTO profissao;
+	@ApiModelProperty(notes = "Profissão")
+	private ProfissaoDTO profissao;
 
-    @ApiModelProperty(notes = "Credenciais no sistema")
-    private UsuarioDTO usuario;
+	@ApiModelProperty(notes = "Credenciais no sistema")
+	private UsuarioDTO usuario;
 
-    @ApiModelProperty(notes = "Estado civil")
-    private EstadoCivilDTO estadoCivil;
+	@ApiModelProperty(notes = "Estado civil")
+	private EstadoCivilDTO estadoCivil;
 
-    private List<TelefoneDTO> telefones = new ArrayList<>();
+	private List<TelefoneDTO> telefones = new ArrayList<>();
 
-    private List<EnderecoDTO> enderecos = new ArrayList<>();
+	private List<EnderecoDTO> enderecos = new ArrayList<>();
 
-    @ApiModelProperty(notes = "Sigla da UF Naturalidade")
-    private String siglaUfNaturalidade;
-    
-    @ApiModelProperty(notes = "Id do sexo")
-    private Integer idSexo;
-    
-    @ApiModelProperty(notes = "Id da escolaridade")
-    private Integer idEscolaridade;
-    
-    @ApiModelProperty(notes = "Id da alocação")
-    private Integer idAlocacao;
-    
-    @ApiModelProperty(notes = "Id da profissão")
-    private Long idProfissao;
-    
-    @ApiModelProperty(notes = "Id do estado civil")
-    private Integer idEstadoCivil;
+	@ApiModelProperty(notes = "Sigla da UF Naturalidade")
+	private String siglaUfNaturalidade;
 
-    public CadastroBasicoDTO() {
-        // default constructor
-    }
+	@ApiModelProperty(notes = "Id do sexo")
+	private Integer idSexo;
 
-    public CadastroBasicoDTO(Membro membro,
-                             Optional<Profissao> profissao,
-                             Optional<Usuario> usuario,
-                             Optional<EstadoCivil> estadoCivil,
-                             Optional<List<Telefone>> telefones,
-                             Optional<List<Endereco>> enderecos) {
-        this.id = membro.getId();
-        this.nome = membro.getNome();
-        this.dataNascimento = membro.getDataNascimento();
-        this.sexo = membro.getSexo();
-        this.cpf = membro.getCpf();
-        this.rg = membro.getRg();
-        this.naturalidade = membro.getNaturalidade();
-        this.ufNaturalidade = membro.getUfNaturalidade();
-        this.orgaoEmissor = membro.getOrgaoEmissor();
-        this.escolaridade = membro.getEscolaridade();
-        this.informacaoAdicional = membro.getInformacaoAdicional();
-        this.alocacao = membro.getAlocacao();
-        profissao.ifPresent(p -> this.profissao = new ProfissaoDTO(p));
-        usuario.ifPresent(u -> this.usuario = new UsuarioDTO(u));
-        telefones.ifPresent(tels -> {
-            tels.forEach(t -> this.telefones.add(new TelefoneDTO(t)));
-        });
-        enderecos.ifPresent(ends -> {
-            ends.forEach(e -> this.enderecos.add(new EnderecoDTO(e)));
-        });
-    }
+	@ApiModelProperty(notes = "Id da escolaridade")
+	private Integer idEscolaridade;
 
-    public Membro toEntity(Long id) {
-        Membro membro = new Membro();
-        membro.setId(id);
-        membro.setNome(this.nome);
-        membro.setDataNascimento(this.dataNascimento);
-        membro.setSexo(Sexo.fromId(this.idSexo));
-        membro.setNaturalidade(this.naturalidade);
-        membro.setUfNaturalidade(UF.fromSigla(this.siglaUfNaturalidade));
-        membro.setRg(this.rg);
-        membro.setCpf(this.cpf);
-        membro.setOrgaoEmissor(this.orgaoEmissor);
-        membro.setEscolaridade(TipoEscolaridade.fromId(this.idEscolaridade));
-        membro.setInformacaoAdicional(this.informacaoAdicional);
-        membro.setAlocacao(TipoAlocacao.fromId(this.idAlocacao));
-        if (this.idProfissao != null) {
-            membro.setProfissao(new Profissao(this.idProfissao));
-        }
-        if (DTOUtil.valid(this.usuario)) {
-            membro.setUsuario(new Usuario(this.usuario.getId(),
-                    this.usuario.getEmail(), this.usuario.getSenha()));
-        }
-        return membro;
-    }
+	@ApiModelProperty(notes = "Id da alocação")
+	private Integer idAlocacao;
 
-    public Optional<EstadoCivil> toEstadoCivilEntity(Membro membro) {
-    	if (this.idEstadoCivil != null) {
-            return Optional.of(estadoCivil.toEntity(membro, this.idEstadoCivil));
-        }
+	@ApiModelProperty(notes = "Id da profissão")
+	private Long idProfissao;
 
-        return Optional.empty();
-    }
+	@ApiModelProperty(notes = "Id do estado civil")
+	private Integer idEstadoCivil;
 
-    public Optional<List<Telefone>> toTelefonesEntities(Membro membro) {
-        Stream<Telefone> telefoneStream = this.telefones.stream()
-                .map(t -> t.toEntity(membro));
+	public CadastroBasicoDTO() {
+		// default constructor
+	}
 
-        return Optional.of(telefoneStream.collect(Collectors.toList()));
-    }
+	public CadastroBasicoDTO(Membro membro, Optional<Profissao> profissao, Optional<Usuario> usuario,
+			Optional<EstadoCivil> estadoCivil, Optional<List<Telefone>> telefones, Optional<List<Endereco>> enderecos) {
+		this.id = membro.getId();
+		this.nome = membro.getNome();
+		this.dataNascimento = LocalDateTime.of(membro.getDataNascimento(), LocalTime.of(0, 0, 0, 0));
+		this.sexo = membro.getSexo();
+		this.cpf = membro.getCpf();
+		this.rg = membro.getRg();
+		this.naturalidade = membro.getNaturalidade();
+		this.ufNaturalidade = membro.getUfNaturalidade();
+		this.orgaoEmissor = membro.getOrgaoEmissor();
+		this.escolaridade = membro.getEscolaridade();
+		this.informacaoAdicional = membro.getInformacaoAdicional();
+		this.alocacao = membro.getAlocacao();
+		profissao.ifPresent(p -> this.profissao = new ProfissaoDTO(p));
+		usuario.ifPresent(u -> this.usuario = new UsuarioDTO(u));
+		telefones.ifPresent(tels -> {
+			tels.forEach(t -> this.telefones.add(new TelefoneDTO(t)));
+		});
+		enderecos.ifPresent(ends -> {
+			ends.forEach(e -> this.enderecos.add(new EnderecoDTO(e)));
+		});
+	}
 
-    public Optional<List<Endereco>> toEnderecosEntities(Membro membro) {
-        Stream<Endereco> enderecosStream = this.enderecos.stream()
-                .map(e -> e.toEntity(membro));
+	public Membro toEntity(Long id) {
+		Membro membro = new Membro();
+		membro.setId(id);
+		membro.setNome(this.nome);
+		membro.setDataNascimento(this.dataNascimento != null ? this.dataNascimento.toLocalDate() : null);
+		membro.setSexo(Sexo.fromId(this.idSexo));
+		membro.setNaturalidade(this.naturalidade);
+		membro.setUfNaturalidade(UF.fromSigla(this.siglaUfNaturalidade));
+		membro.setRg(this.rg);
+		membro.setCpf(this.cpf);
+		membro.setOrgaoEmissor(this.orgaoEmissor);
+		membro.setEscolaridade(TipoEscolaridade.fromId(this.idEscolaridade));
+		membro.setInformacaoAdicional(this.informacaoAdicional);
+		membro.setAlocacao(TipoAlocacao.fromId(this.idAlocacao));
+		if (this.idProfissao != null) {
+			membro.setProfissao(new Profissao(this.idProfissao));
+		}
+		if (DTOUtil.valid(this.usuario)) {
+			membro.setUsuario(new Usuario(this.usuario.getId(), this.usuario.getEmail(), this.usuario.getSenha()));
+		}
+		return membro;
+	}
 
-        return Optional.of(enderecosStream.collect(Collectors.toList()));
-    }
+	public Optional<EstadoCivil> toEstadoCivilEntity(Membro membro) {
+		if (this.idEstadoCivil != null) {
+			return Optional.of(estadoCivil.toEntity(membro, this.idEstadoCivil));
+		}
 
-    @Override
-    public Long getId() {
-        return id;
-    }
+		return Optional.empty();
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Optional<List<Telefone>> toTelefonesEntities(Membro membro) {
+		Stream<Telefone> telefoneStream = this.telefones.stream().map(t -> t.toEntity(membro));
 
-    public String getNome() {
-        return nome;
-    }
+		return Optional.of(telefoneStream.collect(Collectors.toList()));
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public Optional<List<Endereco>> toEnderecosEntities(Membro membro) {
+		Stream<Endereco> enderecosStream = this.enderecos.stream().map(e -> e.toEntity(membro));
 
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
+		return Optional.of(enderecosStream.collect(Collectors.toList()));
+	}
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
+	@Override
+	public Long getId() {
+		return id;
+	}
 
-    public Sexo getSexo() {
-        return sexo;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-//    public void setSexo(Sexo sexo) {
-//        this.sexo = sexo;
-//    }
+	public String getNome() {
+		return nome;
+	}
 
-    public String getCpf() {
-        return cpf;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
+	public LocalDateTime getDataNascimento() {
+		return dataNascimento;
+	}
 
-    public String getRg() {
-        return rg;
-    }
+	public void setDataNascimento(LocalDateTime dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
 
-    public void setRg(String rg) {
-        this.rg = rg;
-    }
+	public Sexo getSexo() {
+		return sexo;
+	}
 
-    public String getNaturalidade() {
-        return naturalidade;
-    }
+	public void setSexo(Sexo sexo) {
+		this.sexo = sexo;
+	}
 
-    public void setNaturalidade(String naturalidade) {
-        this.naturalidade = naturalidade;
-    }
+	public String getCpf() {
+		return cpf;
+	}
 
-    public UF getUfNaturalidade() {
-        return ufNaturalidade;
-    }
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
-    public void setUfNaturalidade(UF ufNaturalidade) {
-        this.ufNaturalidade = ufNaturalidade;
-    }
+	public String getRg() {
+		return rg;
+	}
 
-    public String getOrgaoEmissor() {
-        return orgaoEmissor;
-    }
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
 
-    public void setOrgaoEmissor(String orgaoEmissor) {
-        this.orgaoEmissor = orgaoEmissor;
-    }
+	public String getNaturalidade() {
+		return naturalidade;
+	}
 
-    public TipoEscolaridade getEscolaridade() {
-        return escolaridade;
-    }
+	public void setNaturalidade(String naturalidade) {
+		this.naturalidade = naturalidade;
+	}
 
-    public void setEscolaridade(TipoEscolaridade escolaridade) {
-        this.escolaridade = escolaridade;
-    }
+	public UF getUfNaturalidade() {
+		return ufNaturalidade;
+	}
 
-    public String getInformacaoAdicional() {
-        return informacaoAdicional;
-    }
+	public void setUfNaturalidade(UF ufNaturalidade) {
+		this.ufNaturalidade = ufNaturalidade;
+	}
 
-    public void setInformacaoAdicional(String informacaoAdicional) {
-        this.informacaoAdicional = informacaoAdicional;
-    }
+	public String getOrgaoEmissor() {
+		return orgaoEmissor;
+	}
 
-    public TipoAlocacao getAlocacao() {
-        return alocacao;
-    }
+	public void setOrgaoEmissor(String orgaoEmissor) {
+		this.orgaoEmissor = orgaoEmissor;
+	}
 
-    public void setAlocacao(TipoAlocacao alocacao) {
-        this.alocacao = alocacao;
-    }
+	public TipoEscolaridade getEscolaridade() {
+		return escolaridade;
+	}
 
-    public ProfissaoDTO getProfissao() {
-        return profissao;
-    }
+	public void setEscolaridade(TipoEscolaridade escolaridade) {
+		this.escolaridade = escolaridade;
+	}
 
-    public void setProfissao(ProfissaoDTO profissao) {
-        this.profissao = profissao;
-    }
+	public String getInformacaoAdicional() {
+		return informacaoAdicional;
+	}
 
-    public UsuarioDTO getUsuario() {
-        return usuario;
-    }
+	public void setInformacaoAdicional(String informacaoAdicional) {
+		this.informacaoAdicional = informacaoAdicional;
+	}
 
-    public void setUsuario(UsuarioDTO usuario) {
-        this.usuario = usuario;
-    }
+	public TipoAlocacao getAlocacao() {
+		return alocacao;
+	}
 
-    public EstadoCivilDTO getEstadoCivil() {
-        return estadoCivil;
-    }
+	public void setAlocacao(TipoAlocacao alocacao) {
+		this.alocacao = alocacao;
+	}
 
-    public void setEstadoCivil(EstadoCivilDTO estadoCivil) {
-        this.estadoCivil = estadoCivil;
-    }
+	public ProfissaoDTO getProfissao() {
+		return profissao;
+	}
 
-    public List<TelefoneDTO> getTelefones() {
-        return telefones;
-    }
+	public void setProfissao(ProfissaoDTO profissao) {
+		this.profissao = profissao;
+	}
 
-    public void setTelefones(List<TelefoneDTO> telefones) {
-        this.telefones = telefones;
-    }
+	public UsuarioDTO getUsuario() {
+		return usuario;
+	}
 
-    public List<EnderecoDTO> getEnderecos() {
-        return enderecos;
-    }
+	public void setUsuario(UsuarioDTO usuario) {
+		this.usuario = usuario;
+	}
 
-    public void setEnderecos(List<EnderecoDTO> enderecos) {
-        this.enderecos = enderecos;
-    }
-    
-    public void setIdSexo(Integer idSexo) {
+	public EstadoCivilDTO getEstadoCivil() {
+		return estadoCivil;
+	}
+
+	public void setEstadoCivil(EstadoCivilDTO estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+	public List<TelefoneDTO> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(List<TelefoneDTO> telefones) {
+		this.telefones = telefones;
+	}
+
+	public List<EnderecoDTO> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<EnderecoDTO> enderecos) {
+		this.enderecos = enderecos;
+	}
+
+	public void setIdSexo(Integer idSexo) {
 		this.idSexo = idSexo;
 	}
-    
-    public Integer getIdSexo() {
+
+	public Integer getIdSexo() {
 		return idSexo;
 	}
-    
-    public String getSiglaUfNaturalidade() {
+
+	public String getSiglaUfNaturalidade() {
 		return siglaUfNaturalidade;
 	}
-    
-    public void setSiglaUfNaturalidade(String siglaUfNaturalidade) {
+
+	public void setSiglaUfNaturalidade(String siglaUfNaturalidade) {
 		this.siglaUfNaturalidade = siglaUfNaturalidade;
 	}
 
@@ -363,6 +365,5 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
 	public void setIdEstadoCivil(Integer idEstadoCivil) {
 		this.idEstadoCivil = idEstadoCivil;
 	}
-    
-    
+
 }

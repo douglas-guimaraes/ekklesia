@@ -90,7 +90,7 @@ public enum UF implements EnumJsonCreator {
     
     public static UF fromSigla(String sigla) {
     	for (UF e : UF.values()) {
-            if (sigla.equals(e.getSigla())) {
+            if (e.getSigla().equals(sigla)) {
                 return e;
             }
         }

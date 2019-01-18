@@ -58,7 +58,7 @@ public enum TipoEscolaridade implements EnumJsonCreator {
 
     public static TipoEscolaridade fromId(final Integer id) {
         for (TipoEscolaridade e : TipoEscolaridade.values()) {
-            if (id.equals(e.getId())) {
+            if (e.getId().equals(id)) {
                 return e;
             }
         }

@@ -49,7 +49,7 @@ public enum TipoAlocacao implements EnumJsonCreator {
 
     public static TipoAlocacao fromId(final Integer id) {
         for (TipoAlocacao e : TipoAlocacao.values()) {
-            if (id.equals(e.getId())) {
+            if (e.getId().equals(id)) {
                 return e;
             }
         }
