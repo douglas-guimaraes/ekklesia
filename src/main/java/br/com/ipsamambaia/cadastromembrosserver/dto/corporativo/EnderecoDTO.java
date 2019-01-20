@@ -65,7 +65,7 @@ public class EnderecoDTO extends BaseDTO<Long> {
         this.rua = endereco.getRua();
         this.complemento = endereco.getComplemento();
         this.pontoReferencia = endereco.getPontoReferencia();
-        this.uf = endereco.getUf();
+        this.siglaUf = endereco.getUf().getSigla();
         this.cidade = endereco.getCidade();
         this.bairro = endereco.getBairro();
     }

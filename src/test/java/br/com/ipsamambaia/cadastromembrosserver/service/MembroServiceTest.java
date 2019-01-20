@@ -90,7 +90,7 @@ public class MembroServiceTest {
     private CadastroBasicoDTO criarCadastroBasico(int valor) {
         CadastroBasicoDTO cdDTO = new CadastroBasicoDTO();
         cdDTO.setNome("Membro 1 IPS" + valor);
-        cdDTO.setDataNascimento(LocalDate.of(1989 + valor, 10 + valor, 25 + valor));
+        cdDTO.setDataNascimento(LocalDateTime.of(1989 + valor, 10 + valor, 25 + valor, 0, 0, 0));
         cdDTO.setIdSexo(impar(valor) ? Sexo.MASCULINO.getId() : Sexo.FEMININO.getId());
         cdDTO.setCpf("1111111111" + valor);
         cdDTO.setRg("123455" + valor);

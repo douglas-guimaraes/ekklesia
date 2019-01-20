@@ -119,16 +119,19 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
 		this.id = membro.getId();
 		this.nome = membro.getNome();
 		this.dataNascimento = LocalDateTime.of(membro.getDataNascimento(), LocalTime.of(0, 0, 0, 0));
-		this.sexo = membro.getSexo();
+		this.idSexo = membro.getSexo().getId();
 		this.cpf = membro.getCpf();
 		this.rg = membro.getRg();
 		this.naturalidade = membro.getNaturalidade();
-		this.ufNaturalidade = membro.getUfNaturalidade();
+		this.siglaUfNaturalidade = membro.getUfNaturalidade().getSigla();
 		this.orgaoEmissor = membro.getOrgaoEmissor();
-		this.escolaridade = membro.getEscolaridade();
+		this.idEscolaridade = membro.getEscolaridade().getId();
 		this.informacaoAdicional = membro.getInformacaoAdicional();
-		this.alocacao = membro.getAlocacao();
-		profissao.ifPresent(p -> this.profissao = new ProfissaoDTO(p));
+		this.idAlocacao = membro.getAlocacao().getId();
+		if(estadoCivil.isPresent()) {
+			this.idEstadoCivil = estadoCivil.get().getId().intValue();
+		}
+		profissao.ifPresent(p -> this.idProfissao = new ProfissaoDTO(p).getId());
 		usuario.ifPresent(u -> this.usuario = new UsuarioDTO(u));
 		telefones.ifPresent(tels -> {
 			tels.forEach(t -> this.telefones.add(new TelefoneDTO(t)));
@@ -163,7 +166,7 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
 
 	public Optional<EstadoCivil> toEstadoCivilEntity(Membro membro) {
 		if (this.idEstadoCivil != null) {
-			return Optional.of(estadoCivil.toEntity(membro, this.idEstadoCivil));
+			return Optional.of(new EstadoCivilDTO().toEntity(membro, this.idEstadoCivil));
 		}
 
 		return Optional.empty();

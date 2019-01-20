@@ -4,7 +4,9 @@ import br.com.ipsamambaia.cadastromembrosserver.dto.corporativo.CadastroBasicoDT
 import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Endereco;
 import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.EstadoCivil;
 import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Membro;
+import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Profissao;
 import br.com.ipsamambaia.cadastromembrosserver.entity.corporativo.Telefone;
+import br.com.ipsamambaia.cadastromembrosserver.entity.seguranca.Usuario;
 import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.EnderecoRepository;
 import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.EstadoCivilRepository;
 import br.com.ipsamambaia.cadastromembrosserver.repository.corporativo.MembroRepository;
@@ -85,4 +87,21 @@ public class MembroService {
     	if(telefones != null) telefoneRepository.deleteAll(telefones);
     	if(enderecos != null) enderecoRepository.deleteAll(enderecos);
     }
+
+	public Optional<CadastroBasicoDTO> findBy(long id) {
+		Optional<Membro> membro = findById(id);
+		if(membro.isPresent()) {
+			EstadoCivil estadoCivil = estadoCivilRepository.findByMembro(membro.get());
+			List<Telefone> telefones = telefoneRepository.findByMembro(membro.get());
+			List<Endereco> enderecos = enderecoRepository.findEnderecoByMembro(membro.get());
+			return Optional.of(new CadastroBasicoDTO(
+					membro.get(), 
+					Optional.ofNullable(membro.get().getProfissao()), 
+					Optional.ofNullable(membro.get().getUsuario()),
+					Optional.ofNullable(estadoCivil), 
+					Optional.ofNullable(telefones), 
+					Optional.ofNullable(enderecos)));
+		}
+		return Optional.empty();
+	}
 }
