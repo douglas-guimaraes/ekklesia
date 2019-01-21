@@ -118,7 +118,7 @@ public class CadastroBasicoDTO extends BaseDTO<Long> {
 			Optional<EstadoCivil> estadoCivil, Optional<List<Telefone>> telefones, Optional<List<Endereco>> enderecos) {
 		this.id = membro.getId();
 		this.nome = membro.getNome();
-		this.dataNascimento = LocalDateTime.of(membro.getDataNascimento(), LocalTime.of(0, 0, 0, 0));
+		this.dataNascimento = membro.getDataNascimento() != null ? LocalDateTime.of(membro.getDataNascimento(), LocalTime.of(0, 0, 0, 0)) : null;
 		this.idSexo = membro.getSexo().getId();
 		this.cpf = membro.getCpf();
 		this.rg = membro.getRg();
